@@ -6,12 +6,19 @@ import (
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"log"
 )
 
 func main() {
-	svc := s3.New(session.New())
 
+	sess, err := session.NewSession(&aws.Config{
+		Region: aws.String("us-east-2")},
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	svc := s3.New(sess)
 
 	buckets := []string{"amcclay-aws-bucket1", "amcclay-aws-bucket2",
 		"amcclay-aws-bucket3", "amcclay-aws-bucket4", "amcclay-aws-bucket5"}
